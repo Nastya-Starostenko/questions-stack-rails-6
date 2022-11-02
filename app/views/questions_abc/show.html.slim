@@ -1,0 +1,13 @@
+h1= @question.title
+p= @question.body
+- if user_signed_in? && @question.author == current_user
+  p= link_to 'Delete question', question_path(@question), data: { turbo_method: :delete }
+
+div
+  - @answers.each do |answer|
+    div
+      = answer.body
+      - if user_signed_in? && answer.author == current_user
+        = link_to 'Delete answer', answer_path(answer), data: { turbo_method: :delete }
+
+= render partial: 'answers/form', locals: { answer: @question.answers.new }
