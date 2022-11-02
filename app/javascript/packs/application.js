@@ -3,17 +3,16 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
+import 'bootstrap';
+
 require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
+require("jquery")
 
-import 'bootstrap';
-import 'css/site'
-import 'jquery'
-import('../src/plugins') // note the function usage!
+import '../css/application'
 
 
-Rails.start()
-Turbolinks.start()
-ActiveStorage.start()
+
+

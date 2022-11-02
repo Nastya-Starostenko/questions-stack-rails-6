@@ -21,7 +21,7 @@ p
 p
 	.answer-errors
 		= render 'shared/errors', resource: @answer
-	= form_with model: [@question, @answer], format: :js, class: "form form-horizontal answer"  do |f|
+	= form_with model: [@question, @answer], local: false, class: "form form-horizontal answer"  do |f|
 		.form-group
 			= f.label :body, 'Your answer', class: 'control-label col-lg-2'
 			= f.text_field :body, label: false, class: 'form-control'
