@@ -1,0 +1,4 @@
+<% if !@answer.persisted? %>
+  $(`#block-answer-${<%=@answer.id%>}`).remove();
+  $('.col-lg-9').prepend('<%= bootstrap_flash %>')
+<% end %>

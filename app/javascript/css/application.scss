@@ -1,8 +1,23 @@
-@import "bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/bootstrap.scss";
 
 h1 {
   text-decoration: underline;
 }
+
+input[type=text], textarea{
+  @extend .form-control;
+}
+
+input[type="submit"]{
+  @extend .btn;
+  @extend .btn-light;
+}
+
+label{
+  @extend .form-label;
+}
+
+
 
 // Import Bootstrap v5
 

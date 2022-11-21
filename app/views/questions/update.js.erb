@@ -1,0 +1,6 @@
+$(`.question-errors#question-${<%= @question.id %>}`).html('<%= render 'shared/errors', resource: @question  %>')
+
+<% if !@question.errors.present? %>
+
+$('.question-body').html('<%= j render 'show_question'  %>')
+<% end %>

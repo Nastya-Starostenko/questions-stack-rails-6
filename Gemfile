@@ -27,6 +27,7 @@ gem 'jbuilder', '~> 2.7'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
+gem 'jquery-rails'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -42,6 +43,7 @@ group :development, :test do
   gem 'faker', '~> 2.13.0'
 end
 
+
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 4.1.0'
@@ -53,7 +55,9 @@ group :development do
   gem 'spring'
 
   # Code analyzers
+  #
   gem 'rubocop', require: false
+  gem "pre-commit", require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
 end
@@ -74,3 +78,5 @@ gem "slim-rails"
 gem 'slim'
 
 gem 'devise'
+
+

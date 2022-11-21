@@ -1,37 +1,37 @@
-- model_class = Question
-.page-header
-  h1=@question.title
-p
-  strong= model_class.human_attribute_name(:body) + ':'
-  br
-  = @question.body
-p
-  strong= model_class.human_attribute_name(:author_id) + ':'
-  br
-  = @question.author_id
-.page-header
-	h3 Answers
-p
-	.answers
-		- @question.answers.select(&:persisted?).each do |answer|
-			div
-				= answer.body
-				- if user_signed_in? && answer.author == current_user
-					= link_to 'Delete answer', answer_path(answer), data: { turbo_method: :delete }
-p
-	.answer-errors
-		= render 'shared/errors', resource: @answer
-	= form_with model: [@question, @answer], local: false, class: "form form-horizontal answer"  do |f|
-		.form-group
-			= f.label :body, 'Your answer', class: 'control-label col-lg-2'
-			= f.text_field :body, label: false, class: 'form-control'
-		.form-group
-			= f.submit 'Answer', class: 'btn btn-default'
-	
-= link_to t("helpers.links.back"), questions_path, class: 'btn btn-default'
+.row
+  row.px-4.py-4
+    .card
+      .card-body
+        .row
+          .col-sm-2
+            p
+              = @question.author.email
+            p
+          .col-sm-8
+            .question-body
+              = render 'show_question'
 
-- if user_signed_in? && @question.author == current_user
-	'
-	= link_to t('.edit', :default => t("helpers.links.edit")), edit_question_path(@question), class:'btn btn-default'
-	'
-	= link_to 'Delete question', question_path(@question), data: { turbo_method: :delete, confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) }, class: 'btn btn-danger'
+  .row.mx-4
+    .mt-3
+      .page-header
+        h3 Answers
+        .answers.mx-4
+          = render @question.answers, question: @question
+      p
+        .row.gx-3.gy-2.align-items-center
+          .answer-errors
+            = render 'shared/errors', resource: @answer
+          = form_with model: [@question, @answer], local: false, class: "form form-horizontal new-answer"  do |f|
+            .mb-3
+              = f.label :body, 'Your answer', class: 'control-label col-lg-2'
+              = f.text_area :body, label: false, class: 'form-control'
+            .justify-content-md-end.d-grid.gap-2.d-md-flex
+              = f.submit 'Answer', class: 'btn btn-dark'
+
+      = link_to t("helpers.links.back"), questions_path, class: 'btn btn-default'
+
+      - if user_signed_in? && @question.author == current_user
+        '
+        = link_to t('.edit', :default => t("helpers.links.edit")), edit_question_path(@question), class: 'btn btn-default'
+        '
+        = link_to 'Delete question', question_path(@question), data: { method: :delete, confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) }, class: 'btn btn-danger'
