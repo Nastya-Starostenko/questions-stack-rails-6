@@ -1,0 +1,10 @@
+- model_class = Question
+strong= model_class.human_attribute_name(:title) + ':'
+.card-title
+  h1= @question.title
+p
+  .card-body
+    strong= model_class.human_attribute_name(:body) + ':'
+    br
+      = @question.body
+    = render 'form'

@@ -1,20 +1,18 @@
-= render 'shared/errors', resource: @question
+- local_form = @question.persisted?
+.row
+  - if user_signed_in? && @question.persisted? && @question.author == current_user
+    p= link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: @question.id }
 
-= form_with model: @question, local: true, html: { class: "form form-horizontal question" } do |f|
-  .form-group
-    = f.label :title, class: 'control-label col-lg-2'
-    .col-lg-10
-      = f.text_field :title, class: 'form-control'
-  .form-group
-    = f.label :body, class: 'control-label col-lg-2'
-    .col-lg-10
-      = f.text_area :body, class: 'form-control'
-  .form-group
-    = f.label :author_id, class: 'control-label col-lg-2'
-    .col-lg-10
-      = f.text_field :author_id, class: 'form-control'
-  .form-group
-    .col-lg-offset-2.col-lg-10
-      = f.submit  'Ask', class: 'btn btn-primary'
-      '
-      = link_to t("helpers.links.cancel"), questions_path, class: 'btn'
+  .question-errors id="question-#{@question.id}"
+    = render 'shared/errors', resource: @question
+
+  .question
+    = form_with model: @question, local: !local_form, class: @question.persisted? ? 'hidden' : '', html: { id: "edit-question-#{@question.id}" } do |f|
+      .mb-3
+        = f.label :title
+        = f.text_field :title
+      .mb-3
+        = f.label :body
+        = f.text_area :body
+      .mb-3
+        = f.submit @question.persisted? ? 'Update' : 'Ask'

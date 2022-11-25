@@ -1,0 +1,37 @@
+- question ||= answer.question
+
+- if answer.persisted?
+  h4
+    = answer.best? ? 'Top answer' : ''
+  .card.answer-card class=(answer.best? ? 'best my-3' : '')
+    .card-body
+      .row
+        .col-sm-2
+          p
+            = answer.author.email
+          p
+            - if !answer.best? && question.author == current_user
+              = link_to 'Mark as best', mark_best_answer_path(answer) , class: 'btn btn-outline-secondary best-link', data: { method: :put, remote: true }
+            - elsif answer.best?
+              span
+                .badge.text-bg-success style= 'font-size: 1em'
+                  'BEST
+        .col-sm-8
+          .answer id="block-answer-#{answer.id}"
+            = answer.body
+            '
+            - if user_signed_in? && answer.author == current_user
+              p
+                '
+                = link_to 'Delete answer', answer_path(answer), class: 'delete-answer', data: { method: :delete, remote: true, confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) }
+                '
+                = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+                '
+              .answer-errors id="answer-#{answer.id}"
+                = render 'shared/errors', resource: @answer
+              p= form_with model: answer, local: false, class: "form form-horizontal answer hidden", html: { id: "edit-answer-#{answer.id}" } do |f|
+                .mb-3
+                  = f.label :body, 'Your answer', class: 'col-lg-2'
+                  = f.text_area :body, label: false
+                .mb-3
+                  = f.submit 'Save'
