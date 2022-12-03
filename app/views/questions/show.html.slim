@@ -22,16 +22,19 @@
           .answer-errors
             = render 'shared/errors', resource: @answer
           = form_with model: [@question, @answer], local: false, class: "form form-horizontal new-answer"  do |f|
-            .mb-3
-              = f.label :body, 'Your answer', class: 'control-label col-lg-2'
-              = f.text_area :body, label: false, class: 'form-control'
-            .justify-content-md-end.d-grid.gap-2.d-md-flex
-              = f.submit 'Answer', class: 'btn btn-dark'
-
-      = link_to t("helpers.links.back"), questions_path, class: 'btn btn-default'
-
-      - if user_signed_in? && @question.author == current_user
-        '
-        = link_to t('.edit', :default => t("helpers.links.edit")), edit_question_path(@question), class: 'btn btn-default'
-        '
-        = link_to 'Delete question', question_path(@question), data: { method: :delete, confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) }, class: 'btn btn-danger'
+						.mb-3
+							= f.label :body, 'Your answer', class: 'control-label col-lg-2'
+							= f.text_area :body, label: false, class: 'form-control'
+						.mb-3
+							= f.label :files
+							'
+							= f.file_field :files, multiple: true, direct_upload: true, class: 'btn'
+						.mb-3
+					    = f.submit 'Answer', class: 'btn btn-dark'
+		= link_to t("helpers.links.back"), questions_path, class: 'btn btn-default'
+		'
+		- if user_signed_in? && @question.author == current_user
+			'
+			= link_to t('.edit', :default => t("helpers.links.edit")), edit_question_path(@question), class: 'btn btn-default'
+			'
+			= link_to 'Delete question', question_path(@question), data: { method: :delete, confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) }, class: 'btn btn-danger'

@@ -10,7 +10,7 @@ feature 'User can edit his answer', "
   given(:user) { create(:user) }
   given(:question) { create(:question) }
   given(:user_second) { create(:user) }
-  given!(:answer) { create(:answer, author: user, question: question) }
+  given!(:answer) { create(:answer, :with_attachment, author: user, question: question) }
 
   scenario 'Unauthenticated can not edit answer' do
     visit question_path(question)
@@ -35,6 +35,15 @@ feature 'User can edit his answer', "
         expect(page).to have_content 'edited answer'
         expect(page).not_to have_selector 'textarea'
       end
+    end
+
+    scenario 'delete attached file', js: true do
+      within '.answers' do
+        accept_alert do
+          click_on 'Delete'
+        end
+      end
+      expect(page).to have_content 'Your attachment was successfully deleted'
     end
 
     scenario 'edit his answer with errors', js: true do

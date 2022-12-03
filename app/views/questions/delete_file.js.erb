@@ -1,0 +1,4 @@
+<% if !@file.persisted? %>
+$('.col-lg-9').prepend('<%= bootstrap_flash %>')
+$(`#block-file-${<%=@file.id%>}`).remove();
+<% end %>

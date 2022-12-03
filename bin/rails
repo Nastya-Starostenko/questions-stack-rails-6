@@ -3,3 +3,5 @@ load File.expand_path("spring", __dir__)
 APP_PATH = File.expand_path('../config/application', __dir__)
 require_relative "../config/boot"
 require "rails/commands"
+ACCESS_KEY_ID='AKIAQ7MGKXXMBK4ZLODS'
+SECRET_ACCESS_KEY='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'

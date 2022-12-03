@@ -1,10 +1,17 @@
 - model_class = Question
 strong= model_class.human_attribute_name(:title) + ':'
 .card-title
-  h1= @question.title
+	h1= @question.title
 p
-  .card-body
-    strong= model_class.human_attribute_name(:body) + ':'
-    br
-      = @question.body
-    = render 'form'
+	.card-body
+		strong= model_class.human_attribute_name(:body) + ':'
+		br
+			= @question.body
+			- if @question.files.attached?
+				- @question.files.each do |file|
+					div id ="block-file-#{file.id}"
+						= link_to file.filename.to_s, url_for(file)
+						'
+						- if user_signed_in? && @question.author == current_user
+							= link_to 'Delete', file_path(file), data: { method: :delete, remote: true, confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) }
+		= render 'form'

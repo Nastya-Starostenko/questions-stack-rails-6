@@ -1,7 +1,7 @@
 $(`.answer-errors#answer-${<%= @answer.id %>}`).html('<%= render 'shared/errors', resource: @answer  %>')
 
 <% if !@answer.errors.present? %>
-$('.answers').html('<%= j render @question.answers %>')
-$('.answers').append('<%= j render @answer %>')
+$(`#block-answer-${<%=@answer.id%>}`).closest('.answer-card').replaceWith('<%= j render @answer %>')
 $('.col-lg-9').prepend('<%= bootstrap_flash %>')
 <% end %>
+

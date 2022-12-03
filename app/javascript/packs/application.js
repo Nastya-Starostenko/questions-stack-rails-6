@@ -8,13 +8,13 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("jquery")
 require("../channels")
+require("@rails/activestorage").start()
 
 
 import 'bootstrap';
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import '../css/application'
 import '../css/common.scss'
-
 
 
 

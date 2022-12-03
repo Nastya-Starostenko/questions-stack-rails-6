@@ -11,4 +11,10 @@ FactoryBot.define do
   trait :invalid do
     body { nil }
   end
+
+  trait :with_attachment do
+    after(:build) do |answer|
+      answer.files.attach(default_image_params)
+    end
+  end
 end
