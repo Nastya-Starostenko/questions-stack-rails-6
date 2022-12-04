@@ -40,16 +40,6 @@ RSpec.describe AnswersController do
     end
   end
 
-  describe 'GET #edit' do
-    let(:answer) { create(:answer) }
-
-    before { get :edit, params: { id: answer } }
-
-    it 'renders edit view' do
-      expect(response).to render_template :edit
-    end
-  end
-
   describe 'PATCH #update' do
     let!(:answer) { create(:answer, question: question) }
     let(:request) { patch :update, params: { id: answer, answer: answer_params }, format: :js }
@@ -92,12 +82,7 @@ RSpec.describe AnswersController do
     let!(:answer) { create(:answer, question: question, author: user) }
 
     it 'deletes answer' do
-      expect { delete :destroy, params: { id: answer } }.to change(Answer, :count).by(-1)
-    end
-
-    it 'redirects to show question' do
-      delete :destroy, params: { id: answer }
-      expect(response).to redirect_to question_path(assigns(:question))
+      expect { delete :destroy, params: { id: answer }, format: :js }.to change(Answer, :count).by(-1)
     end
   end
 end

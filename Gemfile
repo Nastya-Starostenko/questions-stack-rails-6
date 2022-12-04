@@ -28,6 +28,7 @@ gem 'jbuilder', '~> 2.7'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'jquery-rails'
+gem 'aws-sdk-s3'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -41,6 +42,7 @@ group :development, :test do
   gem 'pry'
 
   gem 'faker', '~> 2.13.0'
+  gem 'dotenv-rails'
 end
 
 

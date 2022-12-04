@@ -1,18 +1,21 @@
 - local_form = @question.persisted?
 .row
-  - if user_signed_in? && @question.persisted? && @question.author == current_user
-    p= link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: @question.id }
-
-  .question-errors id="question-#{@question.id}"
-    = render 'shared/errors', resource: @question
-
-  .question
-    = form_with model: @question, local: !local_form, class: @question.persisted? ? 'hidden' : '', html: { id: "edit-question-#{@question.id}" } do |f|
-      .mb-3
-        = f.label :title
-        = f.text_field :title
-      .mb-3
-        = f.label :body
-        = f.text_area :body
-      .mb-3
-        = f.submit @question.persisted? ? 'Update' : 'Ask'
+	- if user_signed_in? && @question.persisted? && @question.author == current_user
+		p= link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: @question.id }
+	
+	.question-errors id="question-#{@question.id}"
+		= render 'shared/errors', resource: @question
+	.question
+		= form_with model: @question, local: !local_form, class: @question.persisted? ? 'hidden' : '', html: { id: "edit-question-#{@question.id}" } do |f|
+			.mb-3
+				= f.label :title
+				= f.text_field :title
+			.mb-3
+				= f.label :body
+				= f.text_area :body
+			.mb-3
+				= f.label :files
+				'
+				= f.file_field :files, multiple: true, direct_upload: true, class: 'btn'
+			.mb-3
+				= f.submit @question.persisted? ? 'Update' : 'Ask'

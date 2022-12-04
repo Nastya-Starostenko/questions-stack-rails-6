@@ -2,9 +2,7 @@
 
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_answer, only: %i[edit update destroy mark_best]
-
-  def edit; end
+  before_action :find_answer, only: %i[update destroy mark_best]
 
   def create
     @question = Question.find(params[:question_id])
@@ -14,7 +12,10 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @answer.update(answer_params)
+    @answer.update(answer_params.except(:files))
+    answer_params[:files]&.each do |file|
+      @answer.files.attach(file)
+    end
     @question = @answer.question
   end
 
@@ -40,6 +41,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body, files: [])
   end
 end

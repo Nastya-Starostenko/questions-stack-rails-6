@@ -57,7 +57,10 @@ RSpec.describe QuestionsController do
   describe 'POST #create' do
     context 'with valid attributes' do
       it 'saves a new question in the db' do
-        expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
+        expect do
+          post :create,
+               params: { question: attributes_for(:question).merge(files: [default_image_params]) }
+        end.to change(Question, :count).by(1)
       end
 
       it 'redirects to show view' do
@@ -84,28 +87,31 @@ RSpec.describe QuestionsController do
   describe 'PATCH #update' do
     context 'with valid attributes' do
       it 'assigns the requested question to @question' do
-        patch :update, params: { id: question, question: attributes_for(:question) }
-
+        patch :update,
+              params: { id: question, question: attributes_for(:question).merge(files: [default_image_params]) },
+              format: :js
         expect(assigns(:question)).to eq question
       end
 
       it 'changes question attributes' do
-        patch :update, params: { id: question, question: { title: 'new title', body: 'new body' } }
+        patch :update, params: { id: question, question: { title: 'new title', body: 'new body' }, format: :js }
 
         question.reload
         expect(question.title).to eq 'new title'
         expect(question.body).to eq 'new body'
       end
 
-      it 'redirects to updated question' do
-        patch :update, params: { id: question, question: attributes_for(:question) }
-
-        expect(response).to redirect_to question
+      it 'renders show view' do
+        patch :update, params: { id: question, question: attributes_for(:question), format: :js }
+        expect(response).to render_template :update
       end
     end
 
     context 'with invalid attributes' do
-      before { patch :update, params: { id: question, question: attributes_for(:question, :invalid) } }
+      before do
+        patch :update, params: { id: question, question: attributes_for(:question, :invalid) },
+                       format: :js
+      end
 
       it 'does not change question attributes' do
         question.reload
@@ -115,7 +121,7 @@ RSpec.describe QuestionsController do
       end
 
       it 're-render edit view' do
-        expect(response).to render_template :edit
+        expect(response).to render_template :update
       end
     end
   end

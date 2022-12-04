@@ -15,5 +15,11 @@ FactoryBot.define do
         create_list(:answer, 2, question: question)
       end
     end
+
+    trait :with_attachment do
+      after(:build) do |question|
+        question.files.attach(default_image_params)
+      end
+    end
   end
 end
